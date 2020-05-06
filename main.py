@@ -9,6 +9,7 @@ import time
 import logging
 
 import basnet
+import transform
 
 logging.basicConfig(level=logging.INFO)
 
@@ -45,9 +46,12 @@ def run():
     # Process Image
     res = basnet.run(np.array(img))
 
+    # Segment the original image
+    masked = transform.segment(img, res)
+
     # Save to buffer
     buff = io.BytesIO()
-    res.save(buff, 'PNG')
+    masked.save(buff, 'PNG')
     buff.seek(0)
 
     # Print stats
