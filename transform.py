@@ -1,6 +1,5 @@
 import numpy as np
 from PIL import Image
-import cv2
 
 
 def as_numpy_rgba(image):
@@ -27,8 +26,17 @@ def segment(image, mask):
     return image_masked
 
 
+def get_mask_bbox(mask):
+    mask = (mask[:, :, 3] > 0)
+    rows = np.any(mask, axis=1)
+    cols = np.any(mask, axis=0)
+    xmin, xmax = np.argmax(rows), mask.shape[0] - 1 - np.argmax(np.flipud(rows))
+    ymin, ymax = np.argmax(cols), mask.shape[1] - 1 - np.argmax(np.flipud(cols))
+    return xmin, xmax, ymin, ymax
+
+
 def crop_bbox(masked_image):
     mask_data = np.asarray(masked_image)
-    x, y, w, h = cv2.boundingRect(mask_data[:, :, 3])
-    cropped_data = mask_data[y:(y + h), x:(x + w), :]
+    xmin, xmax, ymin, ymax = get_mask_bbox(mask_data)
+    cropped_data = mask_data[xmin:xmax, ymin:ymax, :]
     return Image.fromarray(cropped_data)
