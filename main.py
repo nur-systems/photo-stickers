@@ -47,7 +47,7 @@ def run():
     res = basnet.run(np.array(img))
 
     # Segment the original image
-    masked = transform.crop_bbox(transform.segment(img, res))
+    masked = transform.segment(img, res)
 
     # Save to buffer
     buff = io.BytesIO()
