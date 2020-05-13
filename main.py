@@ -48,10 +48,10 @@ def run():
 
     # Segment the original image
     masked = transform.segment(img, res)
-
+    cropped_mask = transform.crop_bbox(masked)
     # Save to buffer
     buff = io.BytesIO()
-    masked.save(buff, 'PNG')
+    cropped_mask.save(buff, 'PNG')
     buff.seek(0)
 
     # Print stats
