@@ -18,7 +18,7 @@ COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 # Copy local code to the container image.
-COPY *.py ./
+COPY src/* ./
 
 # Set default port.
 ENV PORT 80
