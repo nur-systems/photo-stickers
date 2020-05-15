@@ -3,4 +3,5 @@
 *.pth
 venv
 BASNet
+src/BASNet
 __pycache__
