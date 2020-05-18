@@ -21,7 +21,7 @@ rm -rf BASNet
 
 # Run tests
 pip install -r requirements.txt
-python3 -m pytest --rootdir=tests/ --ignore src/pystickers/BASNet || exit 1
+python -m pytest --rootdir=tests/ --ignore src/pystickers/BASNet || exit 1
 
 # Build the docker image
 docker build -t sticker-basnet .
