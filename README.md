@@ -1,59 +1,28 @@
-# BASNet HTTP
+# Sticker BASNet
 
-This is an HTTP service wrapper for [BASNet: Boundary-Aware Salient Object Detection code](https://github.com/NathanUA/BASNet)
-
-The deploy folder contains configuration files for deployment as serverless container with Knative.
+This is an HTTP service to generate Stickers from pictures, building on top of the BASNet HTTP 
+service by [Cyril Diagne](https://github.com/cyrildiagne/BASNet-http).
 
 # Usage:
 
-```bash
-docker run --rm -p 8080:80 gcr.io/cyrildiagne-ml/basnet-http
-```
-
-# Test:
+The `buildImage.sh` bash script will prepare the dependencies, run pytest tests and build the
+Docker image. It will also try to push it to the DockerHub repository for the world to see.
 
 ```bash
-curl -F "data=@test.jpg" http://localhost:8080 -o result.png
+./buildImage.sh
 ```
 
-# Development
+# Testing
 
-- Clone this repository: `git clone https://github.com/cyrildiagne/BASNet-http.git`
-- Go into the cloned directory: `cd BASNet-http`
-- Clone the [BASNet repository](https://github.com/NathanUA/BASNet)
-- Download the pretrained model [basnet.pth](https://drive.google.com/open?id=1s52ek_4YTDRt_EOkx1FS53u-vJa0c4nu)
-- Put the file inside the `BASNet/saved_models/basnet_bsi/` folder.
-
-# Build from source:
-
-### Option 1 - Locally with virtualenv
-
-Requires Python v3.6+
+When the docker image is running, simply sending a file as an HTTP POST will return the sticker:
 
 ```bash
-virtualenv venv
-venv/bin/activate
-```
+curl -X POST -F "data=@./input.jpg" http://localhost:8000/ -o output.png
+````
 
-```bash
-pip install torch==0.4.1
-pip install -r requirements.txt
-```
+# Contributing
 
-```
-python main.py
-```
+Improving test coverage is very welcome. This is meant to be a relatively simple service, so
+improvements are well received only inasmuch as the image is kept as simple as it can be.
 
-### Option 2 - Using Docker
 
-After you've retrieved the BASNet model.
-
-Download Resnet checkpoint
-```
-curl https://download.pytorch.org/models/resnet34-333f7ec4.pth -o resnet34-333f7ec4.pth
-```
-
-```
-docker build -t basnet .
-docker run --rm -p 8080:8080 basnet
-```
