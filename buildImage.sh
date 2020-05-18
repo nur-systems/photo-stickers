@@ -11,11 +11,27 @@ wget --save-cookies cookies.txt 'https://docs.google.com/uc?export=download&id='
      | grep -o '/uc[^"]*' | grep confirm | sed 's/amp;//g' > confirm.txt
 wget --load-cookies cookies.txt -O src/pystickers/BASNet/saved_models/basnet_bsi/basnet.pth \
      "https://docs.google.com$(<confirm.txt)"
-rm confirm.txt cookies.txt
+rm -f confirm.txt cookies.txt
 
 # Fetch the resnet 34 pretrained model
 curl https://download.pytorch.org/models/resnet34-333f7ec4.pth -o resnet34-333f7ec4.pth
 
+# Clean the BASNet repo if needed
+rm -rf BASNet
+
+# Run tests
+pytest --rootdir=tests/ --ignore src/pystickers/BASNet || exit 1
+
 # Build the docker image
 docker build -t sticker-basnet .
-docker run --rm -p 8080:80 sticker-basnet
+
+# Push to DockerHub
+COMMIT_HASH=$(git rev-parse --short HEAD)
+docker tag sticker-basnet:latest nursystems/sticker-basnet:$COMMIT_HASH
+docker push nursystems/sticker-basnet:$COMMIT_HASH
+
+# Run the docker image with all available GPUs
+if command -v nvidia-smi ; then
+  GPU_COMMAND="--gpus all"
+fi
+docker run --rm $GPU_COMMAND -d -p 8000:80 nursystems/sticker-basnet:$COMMIT_HASH

@@ -7,9 +7,6 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Copy BASNet.
-COPY BASNet ./BASNet
-
 # Copy Resnet.
 COPY resnet34-333f7ec4.pth /root/.torch/models/resnet34-333f7ec4.pth
 
