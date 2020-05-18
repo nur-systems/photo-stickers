@@ -20,7 +20,8 @@ curl https://download.pytorch.org/models/resnet34-333f7ec4.pth -o resnet34-333f7
 rm -rf BASNet
 
 # Run tests
-pytest --rootdir=tests/ --ignore src/pystickers/BASNet || exit 1
+pip install -r requirements.txt
+python3 -m pytest --rootdir=tests/ --ignore src/pystickers/BASNet || exit 1
 
 # Build the docker image
 docker build -t sticker-basnet .
