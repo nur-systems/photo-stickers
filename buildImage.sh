@@ -19,9 +19,14 @@ curl https://download.pytorch.org/models/resnet34-333f7ec4.pth -o resnet34-333f7
 # Clean the BASNet repo if needed
 rm -rf BASNet
 
+# Create a virtual environment and activate it
+python -m virtualenv venv
+source venv/bin/activate
+
 # Run tests
 pip install -r requirements.txt
 python -m pytest --rootdir=tests/ --ignore src/pystickers/BASNet || exit 1
+deactivate
 
 # Build the docker image
 docker build -t sticker-basnet .
