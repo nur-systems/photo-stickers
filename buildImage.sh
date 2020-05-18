@@ -20,6 +20,7 @@ curl https://download.pytorch.org/models/resnet34-333f7ec4.pth -o resnet34-333f7
 rm -rf BASNet
 
 # Create a virtual environment and activate it
+python -m pip install virtualenv
 python -m virtualenv venv
 source venv/bin/activate
 
