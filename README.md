@@ -1,5 +1,3 @@
-![Build status](http://brain.nur.systems:8080/job/photo-stickers/badge/icon)
-
 # Sticker BASNet
 
 This is an HTTP service to generate Stickers from pictures, building on top of the [BASNet HTTP 
