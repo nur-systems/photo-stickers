@@ -21,7 +21,7 @@ CORS(app)
 # Simple probe.
 @app.route('/', methods=['GET'])
 def hello():
-    return 'Hello BASNet!'
+    return 'Photo Stickers is running!'
 
 
 # Route http posts to this method
@@ -37,7 +37,10 @@ def run():
         return jsonify({'error': 'empty image'}), 400
 
     # Convert string data to PIL Image
-    img = Image.open(io.BytesIO(data))
+    try:
+        img = Image.open(io.BytesIO(data))
+    except:
+        return jsonify({'error': 'image could not be processed'}), 400
 
     # Ensure i,qge size is under 1024
     if img.size[0] > 1024 or img.size[1] > 1024:
