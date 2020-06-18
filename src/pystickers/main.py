@@ -17,7 +17,6 @@ logging.getLogger('flask_cors').level = logging.DEBUG
 # Initialize the Flask application
 app = Flask(__name__)
 CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 # Simple probe.
