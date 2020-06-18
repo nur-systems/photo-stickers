@@ -2,7 +2,7 @@ import io
 import os
 import sys
 from flask import Flask, request, send_file, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from PIL import Image
 import numpy as np
 import time
@@ -16,16 +16,19 @@ logging.basicConfig(level=logging.INFO)
 # Initialize the Flask application
 app = Flask(__name__)
 CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 # Simple probe.
 @app.route('/', methods=['GET'])
+@cross_origin()
 def hello():
     return 'Photo Stickers is running!'
 
 
 # Route http posts to this method
 @app.route('/', methods=['POST'])
+@cross_origin()
 def run():
     start = time.time()
 
