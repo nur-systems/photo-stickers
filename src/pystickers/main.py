@@ -12,6 +12,7 @@ import basnet
 import transform
 
 logging.basicConfig(level=logging.INFO)
+logging.getLogger('flask_cors').level = logging.DEBUG
 
 # Initialize the Flask application
 app = Flask(__name__)
