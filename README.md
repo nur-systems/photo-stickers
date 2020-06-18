@@ -6,7 +6,9 @@ service by Cyril Diagne](https://github.com/cyrildiagne/BASNet-http).
 # Usage:
 
 The `buildImage.sh` bash script will prepare the dependencies, run pytest tests and build the
-Docker image. It will also try to push it to the DockerHub repository for the world to see.
+Docker image. It will also try to push it to the DockerHub repository for the world to see. 
+It should be no surprise to anyone, but it is also what the little Jenkins I run executes when
+there is a new commit to master. Poor man's CI at its best!
 
 ```bash
 ./buildImage.sh
